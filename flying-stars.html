@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Flying Stars</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;font:15px system-ui,sans-serif;color:#eef;background:#0c1020;background-image:radial-gradient(1px 1px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 110px 90px,#fffa,transparent),radial-gradient(2px 2px at 160px 20px,#8c7bff,transparent);background-size:200px 160px;padding-bottom:104px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:#0c1020ee}
+h1{margin:0;font-size:19px;background:linear-gradient(90deg,#8c7bff,#43d9bd);-webkit-background-clip:text;background-clip:text;color:transparent}
+main{padding:0 12px;max-width:720px;margin:auto}
+nav{position:fixed;bottom:calc(10px + env(safe-area-inset-bottom,0px));left:12px;right:12px;max-width:520px;margin:auto;display:flex;gap:4px;padding:6px;background:#141a38ee;border:1px solid #3a4280;border-radius:26px;box-shadow:0 8px 30px #000a,0 0 24px #8c7bff44;backdrop-filter:blur(10px)}
+nav button{flex:1;background:0;border:0;border-radius:20px;color:#9aa4d0;padding:7px 0;font-size:10.5px;line-height:1.3;transition:.2s}
+nav button.on{color:#fff;background:linear-gradient(135deg,#8c7bff,#43d9bd66);box-shadow:0 0 14px #8c7bff88}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.cd{background:linear-gradient(160deg,#1b2145,#121733);border:1px solid #2a3158;border-radius:16px;padding:12px;margin:10px 0}
+.g .cd{margin:0}
+.im{height:90px;border-radius:12px;background:linear-gradient(135deg,#8c7bff55,#43d9bd44);display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden;margin-bottom:6px}
+.im img{width:100%;height:100%;object-fit:cover}
+.r{display:flex;justify-content:space-between;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap}
+.b{background:#232a55;color:#eef;border:1px solid #3a4280;border-radius:10px;padding:9px 12px;font-size:14px}
+.pu{background:linear-gradient(90deg,#8c7bff,#6d5ce6);border:0;font-weight:600}
+.b:disabled{opacity:.4}
+input,select{width:100%;background:#0f1430;color:#eef;border:1px solid #2a3158;border-radius:10px;padding:10px;margin:4px 0;font-size:15px}
+.pr{color:#43d9bd;font-weight:700}.ok{color:#43d9bd;font-size:12px}.no{color:#ff8a8a;font-size:12px}
+.ch{display:inline-block;padding:6px 12px;margin:3px;border-radius:20px;background:#1b2145;border:1px solid #2a3158;font-size:13px}.ch.on{background:#8c7bff}
+#wh{width:280px;height:280px;border-radius:50%;margin:8px auto;position:relative;border:6px solid #eef3;box-shadow:0 0 30px #8c7bff88;transition:transform 4.2s cubic-bezier(.15,.7,.1,1)}
+#wh i{position:absolute;left:50%;top:50%;width:76px;margin:-9px 0 0 -38px;text-align:center;font:700 11px system-ui;color:#0c1020}
+.wp{color:#43d9bd;font-size:26px;line-height:1;text-align:center}
+.crd{border-radius:16px;padding:16px;background:linear-gradient(135deg,#8c7bff,#43d9bd);color:#0c1020;font-weight:600;min-height:120px}
+#tt{position:fixed;left:50%;bottom:108px;transform:translateX(-50%);background:#8c7bff;color:#fff;padding:10px 16px;border-radius:12px;opacity:0;transition:.3s;pointer-events:none;z-index:9;max-width:90%;text-align:center}
+small{color:#9aa4d0}.em{text-align:center;color:#9aa4d0;padding:30px}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background-image:radial-gradient(1.5px 1.5px at 40px 60px,#fff,transparent),radial-gradient(1.5px 1.5px at 130px 140px,#43d9bd,transparent),radial-gradient(1px 1px at 80px 20px,#fff,transparent);background-size:180px 180px;animation:tw 4s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.3}to{opacity:1}}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 80% 0,#8c7bff33,transparent 45%),radial-gradient(circle at 0 100%,#43d9bd22,transparent 40%)}
+.cd{transition:transform .2s,border-color .2s}.g .cd:active{transform:scale(.97);border-color:#8c7bff}
+.hero{background:linear-gradient(135deg,#8c7bff66,#43d9bd33),#121733}.hero h2{margin:0 0 6px}
+#md{display:none;position:fixed;inset:0;background:#000b;z-index:20;align-items:center;justify-content:center;padding:14px;overflow:auto}
+#wh::after{content:'★';position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px;border-radius:50%;background:#0c1020;color:#43d9bd;display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid #8c7bff}
+</style></head><body>
+<header id="hd"></header><main id="app"></main><nav id="nv"></nav><div id="md" onclick="if(event.target==this)this.style.display='none'"></div><div id="tt"></div>
+<script>
+const $=s=>document.querySelector(s);
+const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const R=n=>Number(n).toLocaleString('ru-RU',{maximumFractionDigits:2})+' ₽';
+const RL={owner:'Владелец',admin:'Администратор',mod:'Модератор',user:'Пользователь'};
+const STS=['Новый','Собирается','Отправлен','Доставлен','Отменён'];
+let S=null;try{S=JSON.parse(localStorage.getItem('fs1'))}catch(e){}
+if(!S)S={users:{},cur:'',orders:[],cats:['Одежда','Гаджеты','Дом','Игры'],
+prods:[[1,'Ночник «Галактика»','Дом',1290,15,'🌌','Проектор звёздного неба'],[2,'Телескоп Орион','Гаджеты',8900,4,'🔭','Для начинающих астрономов'],[3,'Худи «Комета»','Одежда',3200,20,'🧥','Мягкий флис, фиолетовый'],[4,'Умные часы Нова','Гаджеты',5400,9,'⌚','Пульс, шаги, уведомления'],[5,'Игра «Орбита»','Игры',1800,12,'🎲','Настольная, 2–5 игроков'],[6,'Кружка «Туманность»','Дом',650,0,'☕','Меняет цвет от горячего'],[7,'Футболка «Звёздный путь»','Одежда',1400,30,'👕','Хлопок 100%'],[8,'Космо-конструктор','Игры',2700,7,'🚀','500 деталей']].map(a=>({id:a[0],n:a[1],c:a[2],p:a[3],s:a[4],e:a[5],d:a[6]})),
+wh:{n:2,pr:[['50 ₽','r',50,30],['100 ₽','r',100,25],['250 ₽','r',250,15],['500 ₽','r',500,8],['1000 ₽','r',1000,2],['Кешбэк 1%','c',1,10],['Кешбэк 5%','c',5,4],['Ещё раз','n',0,6]].map(a=>({l:a[0],t:a[1],v:a[2],w:a[3]}))}};
+S.chat=S.chat||[];const OH='c8622b989d10dc00fed680ff7d1409685a18bed2028e232d07eb1076f6af9abf';
+const sv=()=>{try{localStorage.setItem('fs1',JSON.stringify(S))}catch(e){T('Не хватило места на устройстве')}};
+const U=()=>S.users[S.cur];
+const ad=()=>U()&&U().r=='owner';
+const td=()=>{let d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const now=()=>new Date().toLocaleString('ru-RU');
+let V='shop',Q='',C='',O='',F=0,AT='p',REG=0,WR=0,busy=0,PH='';
+function T(m){let t=$('#tt');t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,2600)}
+const N=(u,m)=>u.nt.unshift({m,d:now()});
+const Op=(u,m,a,k)=>u.ops.unshift({m,a,k,d:now()});
+function go(v){V=v;draw()}
+async function H(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('fs:'+s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function auth(){return `<div class=cd><div class=r><span class="ch ${REG?'':'on'}" onclick="REG=0;draw()">Вход</span><span class="ch ${REG?'on':''}" onclick="REG=1;draw()">Регистрация</span></div>${REG?'<input id=xn placeholder="Ваше имя">':''}<input id=xe type=email placeholder="Почта"><input id=xp type=password placeholder="Пароль (от 6 символов)">${REG?'':'<input id=xo type=password inputmode=numeric placeholder="Код владельца (только для владельца)">'}<button class="b pu" style="width:100%" onclick="${REG?'doReg()':'doIn()'}">${REG?'Создать аккаунт и получить 5000 ₽':'Войти'}</button><p><small>Забыли пароль? Попросите владельца магазина сбросить его в разделе «Люди». Первый зарегистрированный человек становится владельцем.</small></p></div>`}
+async function doReg(){let n=$('#xn').value.trim(),e=$('#xe').value.trim().toLowerCase(),p=$('#xp').value;
+if(!n||!/^[^\s'"<>\\]+@[^\s'"<>\\]+$/.test(e)||p.length<6)return T('Введите имя, почту и пароль от 6 символов');
+if(S.users[e])return T('Такая почта уже есть');
+let first=!Object.keys(S.users).length,u={e,n,h:await H(p),r:first?'owner':'user',b:5000,fav:[],cart:{},ops:[],nt:[],wins:[],sp:{d:'',n:0},bl:0,cb:0,cn:String(1000+Math.floor(Math.random()*9000))};
+Op(u,'Приветственный бонус',5000,'w');N(u,'Добро пожаловать в Flying Stars! Вам начислено 5000 виртуальных ₽.');
+S.users[e]=u;S.cur=e;sv();V='shop';draw()}
+async function doIn(){let e=$('#xe').value.trim().toLowerCase(),u=S.users[e];
+if(S.lk&&Date.now()<S.lk)return T('Слишком много попыток. Подождите минуту.');
+if(!u||u.h!=await H($('#xp').value))return T('Неверная почта или пароль');
+if(u.r=='owner'&&await H('owner:'+$('#xo').value.trim())!=OH){S.fl=(S.fl||0)+1;if(S.fl>=5){S.lk=Date.now()+60000;S.fl=0}sv();return T('Неверный код владельца')}
+S.fl=0;
+if(u.bl)return T('Аккаунт заблокирован');S.cur=e;sv();V='shop';draw()}
+function out(){S.cur='';sv();draw()}
+function sc(i){C=i<0?'':S.cats[i];draw()}
+function gr(f){let u=U(),l=S.prods.filter(p=>(!f||u.fav.includes(p.id))&&(!C||p.c==C)&&(!F||p.s>0)&&p.n.toLowerCase().includes(Q.toLowerCase()));
+if(O=='a')l.sort((a,b)=>a.p-b.p);if(O=='d')l.sort((a,b)=>b.p-a.p);if(O=='n')l.sort((a,b)=>a.n.localeCompare(b.n));
+if(!l.length)return '<p class=em>Ничего не найдено</p>';
+return l.map(p=>`<div class=cd><div class=im onclick="pd(${p.id})" style="cursor:pointer">${p.img?`<img src="${p.img}">`:p.e}</div><b>${E(p.n)}</b><br><small>${E(p.c)}</small><p>${E(p.d)}</p><div class=r><span class=pr>${R(p.p)}</span><span class="${p.s?'ok':'no'}">${p.s?'В наличии: '+p.s:'Нет в наличии'}</span></div><div class=r><button class=b onclick="fv(${p.id})">${u.fav.includes(p.id)?'♥':'♡'}</button><button class="b pu" ${p.s?'':'disabled'} onclick="ca(${p.id})">В корзину</button></div></div>`).join('')}
+function hero(){let u=U(),l=Math.max(0,SN(u)-(u.sp.d==td()?u.sp.n:0));return `<div class="cd hero"><h2>Привет, ${E(u.n)}! ✨</h2><p>Лучшие товары для звёздных путешественников. Попыток на колесе сегодня: <b>${l}</b></p><button class="b pu" onclick="go('wheel')">🎡 Крутить колесо</button></div>`}
+function shopV(f){return (f?'':hero())+`<input placeholder="🔍 Поиск товаров" value="${E(Q)}" oninput="Q=this.value;$('#gr').innerHTML=gr(${f||0})"><div><span class="ch ${C?'':'on'}" onclick="sc(-1)">Все</span>${S.cats.map((c,i)=>`<span class="ch ${C==c?'on':''}" onclick="sc(${i})">${E(c)}</span>`).join('')}</div><div class=r><select style="width:55%" onchange="O=this.value;draw()"><option value="">Сортировка</option><option value=a ${O=='a'?'selected':''}>Сначала дешёвые</option><option value=d ${O=='d'?'selected':''}>Сначала дорогие</option><option value=n ${O=='n'?'selected':''}>По названию</option></select><label><input type=checkbox style="width:auto" ${F?'checked':''} onchange="F=this.checked?1:0;draw()"> В наличии</label></div><div class=g id=gr>${gr(f||0)}</div>`}
+function pd(id){let p=S.prods.find(x=>x.id==id),u=U();$('#md').innerHTML=`<div class=cd style="max-width:420px;width:100%"><div class=im style="height:200px;font-size:96px">${p.img?`<img src="${p.img}">`:p.e}</div><h3>${E(p.n)}</h3><small>${E(p.c)}</small><p>${E(p.d)}</p><div class=r><span class=pr>${R(p.p)}</span><span class="${p.s?'ok':'no'}">${p.s?'В наличии: '+p.s:'Нет в наличии'}</span></div><div class=r><button class=b onclick="fv(${p.id});pd(${p.id})">${u.fav.includes(p.id)?'♥ В избранном':'♡ В избранное'}</button><button class="b pu" ${p.s?'':'disabled'} onclick="ca(${p.id})">В корзину</button></div><button class=b style="width:100%" onclick="$('#md').style.display='none'">Закрыть</button></div>`;$('#md').style.display='flex'}
+function fv(id){let u=U(),i=u.fav.indexOf(id);i<0?u.fav.push(id):u.fav.splice(i,1);sv();draw()}
+function ca(id){let u=U(),p=S.prods.find(x=>x.id==id);if((u.cart[id]||0)>=p.s)return T('Больше нет в наличии');u.cart[id]=(u.cart[id]||0)+1;sv();T('Добавлено в корзину');draw()}
+function qt(id,d){let u=U(),p=S.prods.find(x=>x.id==id),q=(u.cart[id]||0)+d;if(q>p.s)return T('Больше нет в наличии');if(q<=0)delete u.cart[id];else u.cart[id]=q;sv();draw()}
+function cart(){let u=U(),it=Object.entries(u.cart).map(([i,q])=>[S.prods.find(p=>p.id==i),q]).filter(x=>x[0]),t=it.reduce((s,x)=>s+x[0].p*x[1],0);
+if(!it.length)return '<p class=em>Корзина пуста</p>';
+return it.map(([p,q])=>`<div class="cd r"><span>${p.e} ${E(p.n)}<br><small>${R(p.p)}</small></span><span><button class=b onclick="qt(${p.id},-1)">−</button> ${q} <button class=b onclick="qt(${p.id},1)">+</button></span></div>`).join('')+`<div class=cd><div class=r><b>Итого</b><b class=pr>${R(Math.round(t*(u.vip?.9:1)))}</b></div>${u.vip?'<p>⭐ Скидка VIP 10% применена</p>':''}<p>Ваш баланс: ${R(u.b)}${u.cb?'<br>🎁 Кешбэк '+u.cb+'% будет применён к этому заказу':''}</p><button class="b pu" style="width:100%" onclick="buy()">Оформить заказ</button></div>`}
+function buy(){let u=U(),it=Object.entries(u.cart).map(([i,q])=>({p:S.prods.find(p=>p.id==i),q})).filter(x=>x.p);
+if(!it.length)return;if(it.some(x=>x.q>x.p.s))return T('Не хватает товара на складе');
+let t=Math.round(it.reduce((s,x)=>s+x.p.p*x.q,0)*(u.vip?.9:1));if(t>u.b)return T('Недостаточно виртуальных рублей');
+u.b-=t;it.forEach(x=>x.p.s-=x.q);
+let o={id:Date.now(),u:u.e,it:it.map(x=>x.p.n+' ×'+x.q),ids:it.map(x=>[x.p.id,x.q]),t,st:'Новый',cb:u.cb,d:now()};u.cb=0;S.orders.unshift(o);u.cart={};
+Op(u,'Покупка: заказ №'+o.id,-t);N(u,'Заказ №'+o.id+' оформлен');sv();T('Заказ оформлен!');go('me')}
+function setSt(id,st){if(U().r!='owner'&&U().r!='admin')return;let o=S.orders.find(x=>x.id==id),u=S.users[o.u];if(o.fin)return T('Заказ уже завершён');o.st=st;
+if(st=='Отменён'){o.fin=1;u.b+=o.t;o.ids.forEach(a=>{let p=S.prods.find(x=>x.id==a[0]);if(p)p.s+=a[1]});Op(u,'Возврат за заказ №'+id,o.t)}
+if(st=='Доставлен'){o.fin=1;if(o.cb){let c=Math.round(o.t*o.cb)/100;u.b+=c;Op(u,'Кешбэк '+o.cb+'% за заказ №'+id,c,'cb');N(u,'Начислен кешбэк '+R(c))}}
+N(u,'Заказ №'+id+': '+st);sv();draw()}
+function wheel(){let u=U(),left=Math.max(0,SN(u)-(u.sp.d==td()?u.sp.n:0)),P=S.wh.pr,cl=['#8c7bff','#43d9bd'];
+let g=P.map((p,i)=>`${cl[i%2]} ${i*45}deg ${(i+1)*45}deg`).join(',');
+return `<div class=cd style="text-align:center"><h3>🎡 Колесо фортуны</h3><div class=wp>▼</div><div id=wh style="background:conic-gradient(${g});transform:rotate(${WR}deg)">${P.map((p,i)=>`<i style="transform:rotate(${i*45+22.5}deg) translateY(-100px)">${E(p.l)}</i>`).join('')}</div><p>Попыток сегодня: <b>${left}</b> из ${SN(u)}</p><button class="b pu" onclick="spin()" ${left&&!busy?'':'disabled'}>Крутить</button>${u.cb?`<p>🎁 Активный кешбэк: <b>${u.cb}%</b></p>`:''}<p><small>Правила: денежные призы сразу попадают в кошелёк. Кешбэк действует на ваш следующий заказ и начисляется, когда заказ получает статус «Доставлен» (отменённые заказы не участвуют). Попытки обновляются в полночь.</small></p></div>`}
+function spin(){if(busy)return;let u=U(),P=S.wh.pr;if(u.sp.d!=td())u.sp={d:td(),n:0};if(u.sp.n>=SN(u))return T('Попытки на сегодня закончились');
+u.sp.n++;let tw=P.reduce((s,p)=>s+p.w,0),r=crypto.getRandomValues(new Uint32Array(1))[0]/4294967296*tw,i=0;for(;i<P.length-1;i++){if(r<P[i].w)break;r-=P[i].w}
+let p=P[i];if(p.t=='r'){u.b+=p.v;Op(u,'Выигрыш в колесе: '+p.l,p.v,'w')}if(p.t=='c')u.cb=Math.max(u.cb,p.v);
+u.wins.unshift({l:p.l,d:now()});N(u,'Колесо фортуны: '+p.l);sv();busy=1;
+WR+=1800+(((360-(i*45+22.5)-WR%360)%360)+360)%360;$('#wh').style.transform='rotate('+WR+'deg)';
+setTimeout(()=>{busy=0;T(p.t=='n'?'В этот раз без приза':'Вы выиграли: '+p.l);draw()},4300)}
+function prof(){let u=U();return `<div class=crd>✦ FLYING STARS<br><br>•••• •••• •••• ${u.cn}<br><small style="color:#0c1020">${E(u.n).toUpperCase()} · виртуальная карта</small><br><br>Баланс: ${R(u.b)}</div>
+<div class=cd><b>${E(u.n)}</b> <small>${E(u.e)}</small><br><span class="ch on">${RL[dr(u)]}</span>${u.vip?' <span class=ch>⭐ VIP</span>':''}${u.r!='user'?'<button class="b pu" onclick="V=\'adm\';draw()">Панель управления</button>':''} <button class=b onclick="out()">Выйти</button></div>
+<div class=cd><b>👥 Игроки</b><div>${Object.values(S.users).filter(x=>!x.bl).map(x=>`<span class=ch onclick="pp('${x.e}')">${x.vip?'⭐ ':''}${E(x.n)}</span>`).join('')}</div></div>
+<div class=cd><b>💬 Звёздный чат</b>${u.mt?'<p class=no>Вам запретили писать в чат.</p>':'<div class=r><input id=xt placeholder="Сообщение" style="flex:1"><button class="b pu" onclick="sm()">Отправить</button></div>'}${S.chat.slice(0,15).map(c=>`<p><b style="cursor:pointer" onclick="pp('${c.e}')">${E(c.n)}</b>${S.users[c.e]&&S.users[c.e].vip?' <span class=ch>⭐ VIP</span>':''}${c.r!='user'?' <span class=ch>'+RL[c.r]+'</span>':''}<br>${E(c.m)} <small>${c.d}</small></p>`).join('')||'<p class=em>Сообщений пока нет</p>'}</div>
+<div class=cd><b>🔔 Уведомления</b>${u.nt.slice(0,8).map(n=>`<p>${E(n.m)}<br><small>${n.d}</small></p>`).join('')||'<p class=em>Пока пусто</p>'}</div>
+<div class=cd><b>📦 Мои заказы</b>${S.orders.filter(o=>o.u==u.e).map(o=>`<p>№${o.id} · ${R(o.t)} · <span class=pr>${o.st}</span><br><small>${E(o.it.join(', '))}</small></p>`).join('')||'<p class=em>Заказов нет</p>'}</div>
+<div class=cd><b>💳 История операций</b>${u.ops.slice(0,30).map(o=>`<div class=r><span>${E(o.m)}<br><small>${o.d}</small></span><b class="${o.a>0?'pr':'no'}">${o.a>0?'+':''}${R(o.a)}</b></div>`).join('')||'<p class=em>Операций нет</p>'}</div>
+<div class=cd><b>🎡 Мои выигрыши</b>${u.wins.slice(0,15).map(w=>`<p>${E(w.l)} <small>${w.d}</small></p>`).join('')||'<p class=em>Вы ещё не крутили колесо</p>'}</div>`}
+function ph(f){if(!f)return;let r=new FileReader();r.onload=()=>{let im=new Image();im.onload=()=>{let c=document.createElement('canvas'),k=Math.min(1,320/Math.max(im.width,im.height));c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);PH=c.toDataURL('image/jpeg',.7);T('Фото загружено')};im.src=r.result};r.readAsDataURL(f)}
+function addP(){if(!ad())return;let n=$('#xn').value.trim(),p=+$('#xp').value,s=+$('#xs').value;if(!n||!(p>0)||!(s>=0))return T('Заполните название, цену и количество');
+S.prods.push({id:Date.now(),n,p,s,c:$('#xc').value,e:$('#xe').value||'⭐',d:$('#xd').value,img:PH});PH='';sv();T('Товар добавлен');draw()}
+function edP(id,k){if(!ad())return;dlg('Введите новое значение',1,v=>{let n=+v;if(v===''||isNaN(n)||n<0)return T('Нужно число');S.prods.find(x=>x.id==id)[k]=n;sv();draw()})}
+function dlg(t,inp,cb){$('#md').innerHTML=`<div class=cd style="max-width:380px;width:100%"><p>${t}</p>${inp?'<input id=xv placeholder="Введите значение">':''}<div class=r><button class=b onclick="$('#md').style.display='none'">Отмена</button><button class="b pu" id=xok>Да</button></div></div>`;$('#md').style.display='flex';$('#xok').onclick=()=>{let v=inp?$('#xv').value:1;$('#md').style.display='none';cb(v)}}
+function delP(id){if(!ad())return;dlg('Удалить товар?',0,()=>{S.prods=S.prods.filter(x=>x.id!=id);sv();T('Товар удалён');draw()})}
+function addC(){let v=$('#xk').value.trim();if(!ad()||!v||S.cats.includes(v))return;S.cats.push(v);sv();draw()}
+function delC(i){if(!ad())return;dlg('Удалить категорию?',0,()=>{S.cats.splice(i,1);sv();draw()})}
+function rl(e,r){if(U().r!='owner')return;S.users[e].r=r;N(S.users[e],'Ваша роль: '+RL[r]);sv();draw()}
+const RK={user:0,mod:1,admin:2,owner:3};
+const SN=u=>S.wh.n+(u.xs||0);
+const dr=x=>x.r=='owner'&&x.ti?x.ti:x.r;
+const can=x=>x&&x.e!=U().e&&U().r=='owner';
+const cb=x=>x&&x.e!=U().e&&(U().r=='owner'||U().r=='mod')&&RK[x.r]<RK[U().r];
+function bk(e){let x=S.users[e];if(!cb(x))return T('Нет прав');x.bl=x.bl?0:1;N(x,x.bl?'Ваш аккаунт заблокирован':'Аккаунт разблокирован');sv();draw()}
+function mu(e){let x=S.users[e];if(!cb(x))return T('Нет прав');x.mt=x.mt?0:1;N(x,x.mt?'Вам запретили писать в чат':'Вам снова можно писать в чат');sv();draw()}
+function sm(){let u=U(),m=$('#xt').value.trim();if(u.mt)return T('Вам запретили писать в чат');if(!m)return;S.chat.unshift({n:u.n,e:u.e,r:dr(u),m:m.slice(0,200),d:now()});S.chat=S.chat.slice(0,50);sv();draw()}
+function rp(e){if(!can(S.users[e]))return;dlg('Новый временный пароль (от 6 символов)',1,p=>{if(!p||p.length<6)return T('Слишком короткий');H(p).then(h=>{S.users[e].h=h;N(S.users[e],'Пароль был сброшен администратором');sv();T('Пароль изменён')})})}
+async function tp(){if(U().r!='owner')return;let k=Object.keys(S.users).length,e='igrok'+k+'@demo.ru',h=await H('star1234');if(S.users[e])return T('Такой игрок уже есть');let u={e,n:'Игрок '+k,h,r:'user',b:5000,fav:[],cart:{},ops:[],nt:[],wins:[],sp:{d:'',n:0},bl:0,cb:0,cn:String(1000+Math.floor(Math.random()*9000))};Op(u,'Приветственный бонус',5000,'w');S.users[e]=u;sv();T('Создан: '+e+', пароль star1234');draw()}
+function ti(r){if(U().r!='owner')return;U().ti=r=='owner'?'':r;sv();T('Готово');draw()}
+function pp(e){let x=S.users[e];if(!x)return;let me=U();$('#md').innerHTML=`<div class=cd style="max-width:380px;width:100%;text-align:center"><div class=im style="height:90px;font-size:56px">${x.vip?'👑':'👤'}</div><h3>${E(x.n)}</h3><span class="ch on">${RL[dr(x)]}</span>${x.vip?' <span class=ch>⭐ VIP</span>':''}${x.mt?' <span class=ch>🔇 мут</span>':''}<p><small>Заказов: ${S.orders.filter(o=>o.u==x.e).length} · Выигрышей: ${x.wins.length}</small></p>${me.r=='owner'?`<p>Баланс: <b class=pr>${R(x.b)}</b><br><small>${E(x.e)}</small></p>`:''}<button class=b style="width:100%" onclick="$('#md').style.display='none'">Закрыть</button></div>`;$('#md').style.display='flex'}
+function gm(e){if(U().r!='owner')return;dlg('Сколько виртуальных ₽ выдать?',1,v=>{let a=Math.round(+v);if(!(a>0)||a>10000000)return T('Введите число от 1 до 10 000 000');let x=S.users[e];x.b+=a;Op(x,'Начислено владельцем',a,'g');N(x,'Владелец начислил вам '+R(a));sv();T('Выдано '+R(a));draw()})}
+function vp(e){if(U().r!='owner')return;let x=S.users[e];x.vip=x.vip?0:1;N(x,x.vip?'Вам выдан VIP: скидка 10% на все покупки':'VIP снят');sv();draw()}
+function xs(e){if(U().r!='owner')return;dlg('Сколько дополнительных попыток колеса в день? (0–20)',1,v=>{let n=Math.max(0,Math.min(20,Math.round(+v)||0));S.users[e].xs=n;N(S.users[e],'Дополнительных попыток в день: '+n);sv();T('Готово');draw()})}
+function bc(){if(!ad())return;let m=$('#xm').value.trim();if(!m)return;Object.values(S.users).forEach(u=>N(u,'Сообщение от магазина: '+m));sv();T('Отправлено всем')}
+function pz(i,k,v){if(!ad())return;v=k=='l'?v:Math.max(0,+v||0);S.wh.pr[i][k]=v;sv()}
+function wn(v){if(!ad())return;S.wh.n=Math.max(1,Math.min(20,+v||2));sv()}
+function adm(){let u=U();if(u.r=='user')return '';AT=({owner:AT,admin:'o',mod:'u'})[u.r];
+let tb=[['p','Товары'],['o','Заказы'],['u','Люди'],['w','Колесо'],['s','Статистика']].filter(t=>u.r=='owner'||(u.r=='admin'&&t[0]=='o')||(u.r=='mod'&&t[0]=='u')),h=`<div>${tb.map(t=>`<span class="ch ${AT==t[0]?'on':''}" onclick="AT='${t[0]}';draw()">${t[1]}</span>`).join('')}</div>`,no='<p class=em>Только для администратора</p>';
+if(AT=='p')h+=!ad()?no:`<div class=cd><b>Новый товар</b><input id=xn placeholder="Название"><input id=xp type=number placeholder="Цена ₽"><input id=xs type=number placeholder="Количество"><select id=xc>${S.cats.map(c=>`<option>${E(c)}</option>`).join('')}</select><input id=xe placeholder="Эмодзи, например 🚀"><input id=xd placeholder="Описание"><input type=file accept="image/*" onchange="ph(this.files[0])"><button class="b pu" onclick="addP()">Добавить товар</button></div>`+S.prods.map(p=>`<div class=cd><b>${p.e} ${E(p.n)}</b><div>${R(p.p)} · на складе ${p.s}</div><div class=r><button class=b onclick="edP(${p.id},'p')">Цена</button><button class=b onclick="edP(${p.id},'s')">Склад</button><button class=b onclick="delP(${p.id})">Удалить</button></div></div>`).join('')+`<div class=cd><b>Категории</b><div>${S.cats.map((c,i)=>`<span class=ch onclick="delC(${i})">${E(c)} ✕</span>`).join('')}</div><input id=xk placeholder="Новая категория"><button class=b onclick="addC()">Добавить</button></div>`;
+if(AT=='o')h+=S.orders.map(o=>`<div class=cd><b>№${o.id}</b> · ${R(o.t)}<br><small>${E(S.users[o.u].n)} · ${E(o.it.join(', '))}</small><select onchange="setSt(${o.id},this.value)" ${o.fin?'disabled':''}>${STS.map(s=>`<option ${o.st==s?'selected':''}>${s}</option>`).join('')}</select></div>`).join('')||'<p class=em>Заказов пока нет</p>';
+if(AT=='u')h+=(ad()?`<div class=cd><input id=xm placeholder="Сообщение всем"><button class="b pu" onclick="bc()">Отправить всем</button></div>${u.r=='owner'?`<div class=cd><p>Кнопки «Роль», «Заблокировать» и «Мут» появляются у других игроков, у себя их нет. Пока вы один, создайте тестового игрока.</p><button class=b onclick="tp()">➕ Создать тестового игрока</button></div>`:''}`:'')+Object.values(S.users).map(x=>`<div class=cd><b style="cursor:pointer" onclick="pp('${x.e}')">${E(x.n)}</b>${x.vip?' <span class=ch>⭐ VIP</span>':''} <small>${E(x.e)}</small><div>${RL[dr(x)]} · ${R(x.b)}${x.bl?' · 🚫 заблокирован':''}${x.mt?' · 🔇 мут':''}</div><div class=r>${u.r=='owner'&&x.r!='owner'?`<select style="width:auto" onchange="rl('${x.e}',this.value)">${['user','mod','admin'].map(r=>`<option value=${r} ${x.r==r?'selected':''}>${RL[r]}</option>`).join('')}</select>`:''}${cb(x)?`<button class=b onclick="bk('${x.e}')">${x.bl?'Разблокировать':'Заблокировать'}</button><button class=b onclick="mu('${x.e}')">${x.mt?'Снять мут':'Мут'}</button>`:''}${can(x)?`<button class=b onclick="rp('${x.e}')">Сбросить пароль</button>`:''}</div>${u.r=='owner'?`<div class=r>${x.e==u.e?`<select style="width:auto" onchange="ti(this.value)">${['owner','admin','mod'].map(r=>`<option value=${r} ${dr(x)==r?'selected':''}>Показывать как: ${RL[r]}</option>`).join('')}</select>`:''}<button class=b onclick="gm('${x.e}')">💰 Выдать ₽</button><button class=b onclick="vp('${x.e}')">${x.vip?'Снять VIP':'⭐ VIP'}</button><button class=b onclick="xs('${x.e}')">🎡 Попытки</button></div>`:''}</div>`).join('');
+if(AT=='w')h+=!ad()?no:`<div class=cd><b>Попыток в сутки</b><input type=number value="${S.wh.n}" onchange="wn(this.value)"></div>`+S.wh.pr.map((p,i)=>`<div class=cd><input value="${E(p.l)}" onchange="pz(${i},'l',this.value)"><div class=r><small>Сумма / % :</small><input style="width:90px" type=number value="${p.v}" onchange="pz(${i},'v',this.value)"><small>Вес:</small><input style="width:80px" type=number value="${p.w}" onchange="pz(${i},'w',this.value)"></div></div>`).join('')+'<p><small>Вес — относительная вероятность: чем больше число, тем чаще выпадает приз.</small></p>';
+if(AT=='s'){let us=Object.values(S.users),ops=us.flatMap(x=>x.ops),sm=k=>ops.filter(o=>o.k==k).reduce((s,o)=>s+o.a,0);h+=`<div class=cd><p>Пользователей: <b>${us.length}</b></p><p>Заказов: <b>${S.orders.length}</b></p><p>Оборот (без отмен): <b class=pr>${R(S.orders.filter(o=>o.st!='Отменён').reduce((s,o)=>s+o.t,0))}</b></p><p>Выигрышей в колесе: <b>${us.reduce((s,x)=>s+x.wins.length,0)}</b></p><p>Выдано бонусов: <b>${R(sm('w'))}</b></p><p>Выдано кешбэка: <b>${R(sm('cb'))}</b></p></div>`}
+return h}
+function draw(){let u=S.cur&&S.users[S.cur];
+if(!u){$('#hd').innerHTML='<h1>✦ Flying Stars</h1>';$('#nv').innerHTML='';$('#app').innerHTML=auth();return}
+if(u.bl){S.cur='';sv();return draw()}
+$('#hd').innerHTML=`<h1>✦ Flying Stars</h1><span>${u.vip?'<span class=ch>⭐ VIP</span>':''}<span class="ch on">💰 ${R(u.b)}</span></span>`;
+let n=Object.keys(u.cart).length,tb=[['shop','🛍','Магазин'],['fav','♥','Избранное'],['cart','🛒','Корзина'+(n?' ('+n+')':'')],['wheel','🎡','Колесо'],['me','👤','Профиль']];
+$('#nv').innerHTML=tb.map(t=>`<button class="${V==t[0]?'on':''}" onclick="go('${t[0]}')"><span style="font-size:20px">${t[1]}</span><br>${t[2]}</button>`).join('');
+$('#app').innerHTML=({shop:shopV,fav:()=>shopV(1),cart,wheel,me:prof,adm})[V]();if(!busy)scrollTo(0,0)}
+draw();
+</script></body></html>
